@@ -1,0 +1,50 @@
+body {
+    background-color: #f7f7f7;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    max-width: 800px;
+}
+
+h2 {
+    color: #343a40;
+    margin-bottom: 20px;
+}
+
+.card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+form textarea {
+    resize: none;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+}
+.card {
+    border-radius: 10px;
+}
+
+.card {
+    border-radius: 8px;
+}
+
+.card-body h5 {
+    font-weight: 600;
+}
+
+textarea::placeholder {
+    color: #aaa;
+}
+
+textarea:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,.25);
+}
+
+#posts p {
+    margin-bottom: 6px;
+}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Social Media Dashboard</title>
+
+    {% load static %}
+    <link rel="icon" href="{% static 'images/favicon.ico' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <script src="{% static 'js/dashboard.js' %}" defer></script>
+</head>
+
+<body class="container mt-4">
+
+    <!-- ✅ Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4 rounded shadow-sm">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="{% url 'dashboard-page' %}">📊 Dashboard</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Menu</a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="{% url 'dashboard-page' %}">🏠 Dashboard</a></li>
+                            <li><a class="dropdown-item" href="{% url 'update-profile' %}">👤 Edit Profile</a></li>
+                            <!--<li><a class="dropdown-item" href="{% url 'update-social' %}">🔗 Social Accounts</a></li>-->
+                            <li><a class="dropdown-item" href="/accounts/password_change/">🔐 Change Password</a></li>
+                            <li><a class="dropdown-item" href="/accounts/password_reset/">❓ Forgot Password</a></li>
+                            <li><a class="dropdown-item" href="/admin/">🛠 Admin Panel</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form method="POST" action="{% url 'logout' %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <button type="submit" class="dropdown-item text-danger">🚪 Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ✅ Profile Info -->
+    <div class="card mb-4 shadow-sm" style="max-width: 500px;">
+        <div class="row g-0 align-items-center">
+            <div class="col-auto">
+                {% if user.profile.profile_picture %}
+                    <img src="{{ user.profile.profile_picture.url }}" class="img-fluid rounded-circle m-3" style="width: 80px; height: 80px;" alt="Profile Pic">
+                {% else %}
+                    <img src="{% static 'images/default-avatar.png' %}" class="img-fluid rounded-circle m-3" style="width: 80px; height: 80px;" alt="No Profile Pic">
+                {% endif %}
+            </div>
+            <div class="col">
+                <div class="card-body">
+                    <h5 class="card-title mb-0">Welcome, {{ user.username }} 👋</h5>
+                    <!-- <p class="mb-0"><a href="{% url 'update-profile' %}">Edit Profile</a></p>-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ✅ Post Form (Text only) -->
+    <form id="post-form" class="mb-3" onsubmit="createPost(event)">
+        {% csrf_token %}
+        <textarea id="content" class="form-control" rows="2" placeholder="What's on your mind?" required></textarea>
+
+        <div class="text-end">
+            <button type="submit" class="btn btn-primary mt-2">📤 Post</button>
+        </div>
+    </form>
+
+    <!-- ✅ Posts Section -->
+    <div id="posts" class="mt-4"></div>
+
+    <!-- ✅ Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
